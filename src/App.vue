@@ -2,10 +2,15 @@
   <div id="app">
 
     <header>
-      <h1>Nodes App</h1>
+      <div class="container">
+        <h1>Nodes App</h1>
+      </div>
     </header>
 
-    <router-view></router-view>
+    <div class="container">
+      <router-view></router-view>
+    </div>
+
   </div>
 </template>
 
@@ -16,10 +21,6 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-  body {
-    margin: 0;
-  }
-
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -34,6 +35,5 @@
       color: #FFF;
       font-weight: lighter;
     }
-
   }
 </style>

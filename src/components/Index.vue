@@ -1,35 +1,45 @@
 <template>
-  <h1>Hello</h1>
+  <div v-if="nodes">
+    <node-hierarchy class="node-hierarchy" v-for="node in nodes" :key="node.id" :node="node"></node-hierarchy>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  import NodeHierarchy from '../components/NodeHierarchy';
+
+  export default {
+    components: { NodeHierarchy },
+
+    data() {
+      return {
+        nodes: [],
+      }
+    },
+
+    created() {
+      this.$http.get('nodes/')
+        .then(res => {
+          this.nodes = res.body
+        })
+        .catch(err => console.log(err))
+
+    },
+
+    sockets: {
+      connect(){
+        console.log('socket connected')
+      },
+
+      test(val){
+        console.log(val)
+      },
+    },
+
+
   }
-}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+<style scoped lang="scss" rel="stylesheet/scss">
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>

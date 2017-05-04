@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import bus from '../bus';
   import NodeHierarchy from '../components/NodeHierarchy';
 
   export default {
@@ -19,23 +20,23 @@
     created() {
       this.$http.get('nodes/')
         .then(res => {
-          this.nodes = res.body
+          this.nodes = res.body;
         })
         .catch(err => console.log(err))
 
     },
 
-    sockets: {
-      connect(){
-        console.log('socket connected')
-      },
-
-      test(val){
-        console.log(val)
-      },
+    mounted() {
+      this.broadcastUpdate();
     },
 
+    methods: {
 
+      broadcastUpdate() {
+        bus.$emit('update');
+      },
+
+    },
   }
 </script>
 

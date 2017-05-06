@@ -36,7 +36,7 @@
       createNode() {
         this.$http.post('nodes/', this.form)
           .then(res => {
-            console.log(res);
+            this.$emit('nodesUpdate');
           })
           .catch(err => {
             console.log(err);

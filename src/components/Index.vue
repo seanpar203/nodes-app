@@ -14,18 +14,13 @@
             <span class="pointer lht-blue" @click="isCreating = !isCreating">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Create a new node.
-
-
-
-
-
             </span>
           </div>
         </div>
       </div>
 
       <div class="six columns">
-        <create-node-form v-show="isCreating" @nodesUpdate="test()" keep-alive></create-node-form>
+        <create-node-form v-show="isCreating" @nodesUpdate="modifiedNodes()" keep-alive></create-node-form>
       </div>
     </div>
 
@@ -83,10 +78,6 @@
           .catch(err => {
             console.log(err)
           });
-      },
-
-      test() {
-        this.modifiedNodes();
       },
     },
   }

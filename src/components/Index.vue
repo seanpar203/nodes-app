@@ -20,7 +20,7 @@
       </div>
 
       <div class="six columns">
-        <create-node-form v-show="isCreating" @nodesUpdate="modifiedNodes()" keep-alive></create-node-form>
+        <create-node-form v-show="isCreating" @nodesUpdate="nodesUpdate()" keep-alive></create-node-form>
       </div>
     </div>
 
@@ -64,12 +64,6 @@
 
     methods: {
 
-      /**
-       * API request.
-       *
-       * Endpoint:
-       *  api/nodes/
-       */
       getNodes() {
         this.$http.get('nodes/')
           .then(res => {
@@ -79,6 +73,16 @@
             console.log(err)
           });
       },
+
+      resetState() {
+        this.isCreating = false;
+        this.isEditing = false;
+      },
+
+      nodesUpdate() {
+        this.resetState();
+        this.modifiedNodes();
+      }
     },
   }
 </script>

@@ -33,9 +33,15 @@
         }
       },
 
+      resetState() {
+        this.submitted = false;
+        this.form.name = '';
+      },
+
       createNode() {
         this.$http.post('nodes/', this.form)
           .then(res => {
+            this.resetState();
             this.$emit('nodesUpdate');
           })
           .catch(err => {

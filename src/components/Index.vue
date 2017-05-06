@@ -14,13 +14,28 @@
             <span class="pointer lht-blue" @click="isCreating = !isCreating">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Create a new node.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </span>
           </div>
         </div>
       </div>
 
       <div class="six columns">
-        <create-node-form v-show="isCreating" @nodesUpdate="nodesUpdate()" keep-alive></create-node-form>
+        <create-node-form v-show="isCreating" keep-alive></create-node-form>
       </div>
     </div>
 
@@ -28,15 +43,18 @@
 </template>
 
 <script>
+  // Services
+  import EventBus from '../services/EventBus';
+
   // Mixins
-  import EmitsEvents from '../mixins/EmitsEvents';
+  import EmitsSocketEvents from '../mixins/EmitsSocketEvents';
 
   // Components
   import CreateNodeForm from './CreateNodeForm';
   import NodeHierarchy from '../components/NodeHierarchy';
 
   export default {
-    mixins:     [EmitsEvents],
+    mixins:     [EmitsSocketEvents],
     components: { NodeHierarchy, CreateNodeForm },
 
     data() {
@@ -49,6 +67,18 @@
 
     created() {
       this.getNodes();
+
+      /**
+       * Create Event listeners.
+       */
+      EventBus.$on('edit:node', node => {
+        console.log(node);
+      });
+
+      EventBus.$on('update:node', () => {
+        this.resetState();
+        this.updateNodes();
+      })
     },
 
     sockets: {
@@ -57,8 +87,7 @@
       },
 
       update(nodes) {
-        nodes = JSON.parse(nodes);
-        this.nodes = nodes;
+        this.nodes = JSON.parse(nodes);
       }
     },
 
@@ -66,23 +95,22 @@
 
       getNodes() {
         this.$http.get('nodes/')
-          .then(res => {
-            this.nodes = res.body;
-          })
-          .catch(err => {
-            console.log(err)
-          });
+          .then(this.getSuccess)
+          .catch(this.getError);
+      },
+
+      getSuccess(res) {
+        this.nodes = res.body;
+      },
+
+      getError(err) {
+        console.log(err)
       },
 
       resetState() {
         this.isCreating = false;
         this.isEditing = false;
       },
-
-      nodesUpdate() {
-        this.resetState();
-        this.modifiedNodes();
-      }
     },
   }
 </script>

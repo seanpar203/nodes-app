@@ -12,6 +12,9 @@
 </template>
 
 <script>
+  // Services
+  import EventBus from '../services/EventBus';
+
   export default {
 
     data() {
@@ -40,13 +43,17 @@
 
       createNode() {
         this.$http.post('nodes/', this.form)
-          .then(res => {
-            this.resetState();
-            this.$emit('nodesUpdate');
-          })
-          .catch(err => {
-            console.log(err);
-          });
+          .then(this.createSuccess)
+          .catch(this.createError);
+      },
+
+      createSuccess() {
+        this.resetState();
+        EventBus.$emit('update:node');
+      },
+
+      createError(err) {
+        console.log(err);
       },
 
     },

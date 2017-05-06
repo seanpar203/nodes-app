@@ -2,17 +2,20 @@
 
 <template>
   <ul :class="{'has-children': hasChildren}">
-    <li class="name">{{node.name}}</li>
+    <li class="name" @click="editNode(node)">{{node.name}}</li>
     <node-hierarchy class="child" v-for="child in node.children" :key="child.id" :node="child"></node-hierarchy>
   </ul>
 </template>
 
 <script>
+  // Services
+  import EventBus from '../services/EventBus';
+
   // Mixins
-  import EmitsEvents from '../mixins/EmitsEvents';
+  import EmitsSocketEvents from '../mixins/EmitsSocketEvents';
 
   export default {
-    mixins: [EmitsEvents],
+    mixins: [EmitsSocketEvents],
     name:   'node-hierarchy',
     props:  ['node'],
 
@@ -21,6 +24,16 @@
         return this.node.children.length > 0;
       }
     },
+
+    methods: {
+
+      editNode(node) {
+        if (node.can_have_children) {
+          EventBus.$emit('edit:node', node);
+        }
+      },
+
+    }
   };
 </script>
 

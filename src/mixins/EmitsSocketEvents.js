@@ -5,7 +5,7 @@
 export default {
 
   methods: {
-    modifiedNodes() {
+    updateNodes() {
       this.$socket.emit('update:nodes');
     }
   },

@@ -28,6 +28,7 @@
   }
 
   header {
+    margin-bottom: 25px;
     background-color: rgba(0, 0, 200, 0.65);
 
     h1 {
@@ -35,5 +36,11 @@
       color: #FFF;
       font-weight: lighter;
     }
+  }
+
+  .error-text {
+    color: rgba(255, 0, 0, 0.65);
+    font-size: 12px;
+    font-weight: bold;
   }
 </style>

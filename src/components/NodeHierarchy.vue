@@ -8,9 +8,13 @@
 </template>
 
 <script>
+  // Mixins
+  import EmitsEvents from '../mixins/EmitsEvents';
+
   export default {
-    name:  'node-hierarchy',
-    props: ['node'],
+    mixins: [EmitsEvents],
+    name:   'node-hierarchy',
+    props:  ['node'],
 
     computed: {
       hasChildren() {

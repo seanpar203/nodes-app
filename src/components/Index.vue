@@ -11,23 +11,9 @@
           </div>
 
           <div class="five columns">
-            <span class="pointer lht-blue" @click="isCreating = !isCreating">
+            <span class="pointer lht-blue" @click="createNode">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Create a new node.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </span>
           </div>
@@ -35,6 +21,7 @@
       </div>
 
       <div class="six columns">
+        <update-node-form v-if="isUpdating" :node="activeNode"></update-node-form>
         <create-node-form v-show="isCreating" keep-alive></create-node-form>
       </div>
     </div>
@@ -50,16 +37,18 @@
   import EmitsSocketEvents from '../mixins/EmitsSocketEvents';
 
   // Components
+  import UpdateNodeForm from './UpdateNodeForm';
   import CreateNodeForm from './CreateNodeForm';
   import NodeHierarchy from '../components/NodeHierarchy';
 
   export default {
     mixins:     [EmitsSocketEvents],
-    components: { NodeHierarchy, CreateNodeForm },
+    components: { NodeHierarchy, CreateNodeForm, UpdateNodeForm },
 
     data() {
       return {
         nodes:      [],
+        activeNode: {},
         isCreating: false,
         isUpdating: false,
       }
@@ -72,7 +61,9 @@
        * Create Event listeners.
        */
       EventBus.$on('edit:node', node => {
-        console.log(node);
+        this.resetState();
+        this.activeNode = node;
+        this.isUpdating = true;
       });
 
       EventBus.$on('update:node', () => {
@@ -109,8 +100,13 @@
 
       resetState() {
         this.isCreating = false;
-        this.isEditing = false;
+        this.isUpdating = false;
       },
+
+      createNode() {
+        this.resetState();
+        this.isCreating = true;
+      }
     },
   }
 </script>

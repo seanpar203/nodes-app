@@ -4,41 +4,31 @@
       <div class="six columns">
         <label for="node-name">New node name.</label>
         <input class="u-full-width" type="text" placeholder="Node name" id="node-name" v-model="form.name">
-        <p class="error-text" v-show="submitted && !isValid">Node name must be 5 characters or greater in length</p>
-        <button class="button-primary" @click.prevent="submit">Submit</button>
+        <p class="error-text" v-show="submitted && !isNameValid">Node name must be 5 characters or greater in length</p>
+        <button class="button-primary" @click.prevent="submit">Create</button>
       </div>
     </div>
   </form>
 </template>
 
 <script>
+  // Mixins
+  import NodeForm from '../mixins/NodeForm';
+
   // Services
   import EventBus from '../services/EventBus';
 
   export default {
-
-    data() {
-      return {
-        form:      {
-          name: '',
-        },
-        submitted: false,
-      }
-    },
+    mixins: [NodeForm],
 
     methods: {
 
       submit() {
         this.submitted = true;
 
-        if (this.isValid) {
+        if (this.isFormValid) {
           this.createNode();
         }
-      },
-
-      resetState() {
-        this.submitted = false;
-        this.form.name = '';
       },
 
       createNode() {
@@ -57,12 +47,6 @@
       },
 
     },
-
-    computed: {
-      isValid() {
-        return this.form.name.length >= 5;
-      },
-    }
   };
 </script>
 

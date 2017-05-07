@@ -22,6 +22,9 @@
 </template>
 
 <script>
+  // Services
+  import EventBus from '../services/EventBus';
+
   // mixins
   import NodeFrom from '../mixins/NodeForm';
 
@@ -47,10 +50,23 @@
         this.submitted = true;
 
         if (this.isFormValid) {
-          console.log('Seaninho');
+          this.updateNode();
         }
       },
 
+      updateNode() {
+        this.$http.put(`nodes/${this.node.id}/`, this.form)
+          .then(this.updateSuccess)
+          .catch(this.updateError);
+      },
+
+      updateSuccess(res) {
+        EventBus.$emit('update:node');
+      },
+
+      updateError(err) {
+        console.log(err);
+      }
     },
   };
 </script>

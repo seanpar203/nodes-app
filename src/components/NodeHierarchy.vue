@@ -2,7 +2,10 @@
 
 <template>
   <ul :class="{'has-children': hasChildren}">
-    <li class="name" @click="editNode(node)">{{node.name}}</li>
+    <li class="name" @click="editNode(node)">{{node.name}}
+
+      <span v-show="isSubNode">{{node.min_num}}:{{node.max_num}}</span>
+    </li>
     <node-hierarchy class="child" v-for="child in node.children" :key="child.id" :node="child"></node-hierarchy>
   </ul>
 </template>
@@ -19,21 +22,25 @@
     name:   'node-hierarchy',
     props:  ['node'],
 
-    computed: {
-      hasChildren() {
-        return this.node.children.length > 0;
-      }
-    },
-
     methods: {
 
       editNode(node) {
-        if (node.can_have_children) {
+        if (this.isSubNode) {
           EventBus.$emit('edit:node', node);
         }
       },
 
-    }
+    },
+
+    computed: {
+      hasChildren() {
+        return this.node.children.length > 0;
+      },
+
+      isSubNode() {
+        return (this.node.can_have_children && this.node.name !== 'Root');
+      }
+    },
   };
 </script>
 

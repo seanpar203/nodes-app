@@ -1,7 +1,7 @@
 <template>
   <form>
     <div class="row">
-      <div class="six columns">
+      <div class="eight columns">
         <label for="node-name">New node name.</label>
         <input class="u-full-width" type="text" placeholder="Node name" id="node-name" v-model="form.name">
         <p class="error-text" v-show="submitted && !isNameValid">Node name must be 5 characters or greater in length</p>
@@ -43,9 +43,15 @@
       },
 
       createError(err) {
-        console.log(err);
+        EventBus.$emit('api:error', err.body);
       },
 
+    },
+
+    computed: {
+      validators() {
+        return [this.isNameValid]
+      },
     },
   };
 </script>

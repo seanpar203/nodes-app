@@ -10,7 +10,6 @@ export default {
         max_num: 1,
       },
       fields:     [],
-      validators: [],
       submitted:  false,
     }
   },
@@ -39,7 +38,7 @@ export default {
     },
 
     isNameValid() {
-      return this.form.name.length >= 5;
+      return 5 <= this.form.name.length;
     },
 
     isValuesValid() {

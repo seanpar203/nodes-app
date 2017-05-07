@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <error-modal></error-modal>
 
     <header>
       <div class="container">
@@ -15,8 +16,12 @@
 </template>
 
 <script>
+  // Components
+  import ErrorModal from './components/ErrorModal';
+
   export default {
-    name: 'app'
+    components: { ErrorModal },
+    name:       'app'
   }
 </script>
 
@@ -42,5 +47,6 @@
     color: rgba(255, 0, 0, 0.65);
     font-size: 12px;
     font-weight: bold;
+    margin-bottom: 5px;
   }
 </style>

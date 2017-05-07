@@ -3,7 +3,8 @@
 <template>
   <ul :class="{'has-children': hasChildren}">
     <li class="name" @click="editNode(node)" :class="{'cursor': isSubNode}">{{node.name}}
-      <span v-show="isSubNode">{{node.min_num}}:{{node.max_num}}</span>
+
+      <span class="num-range" v-show="isSubNode">{{node.min_num}}:{{node.max_num}}</span>
     </li>
     <node-hierarchy v-if="node.can_have_children" class="child" v-for="child in node.children" :key="child.id" :node="child"></node-hierarchy>
   </ul>
@@ -52,6 +53,13 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+  }
+
+  .num-range {
+    padding: 3px;
+    border-radius: 3px;
+    color: #FFF;
+    background-color: rgba(#000, 0.45);
   }
 
   ul {

@@ -22,16 +22,15 @@
   import EventBus from '../services/EventBus';
 
   // mixins
-  import NodeFrom from '../mixins/NodeForm';
+  import NodeForm from '../mixins/NodeForm';
 
   export default {
-    mixins: [NodeFrom],
+    mixins: [NodeForm],
     props:  ['node'],
 
     data() {
       return {
-        fields:     ['name', 'min_num', 'max_num'],
-        validators: [this.isNameValid, this.isValuesValid]
+        fields: ['name', 'min_num', 'max_num'],
       }
     },
 
@@ -64,7 +63,7 @@
       },
 
       updateError(err) {
-        console.log(err);
+        EventBus.$emit('api:error', err.body);
       },
 
 
@@ -82,8 +81,14 @@
       },
 
       deleteError(err) {
-        console.log(err);
+        EventBus.$emit('api:error', err.body);
       },
+    },
+
+    computed: {
+      validators() {
+        return [this.isNameValid, this.isValuesValid]
+      }
     },
   };
 </script>

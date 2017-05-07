@@ -14,18 +14,17 @@
   import EventBus from '../services/EventBus';
 
   // mixins
-  import NodeFrom from '../mixins/NodeForm';
+  import NodeForm from '../mixins/NodeForm';
 
   export default {
-    mixins: [NodeFrom],
+    mixins: [NodeForm],
     props:  ['node'],
 
     data() {
       return {
-        form:       {
+        form: {
           count: 1
-        },
-        validators: [this.isCountValid]
+        }
       }
     },
 
@@ -52,11 +51,15 @@
       },
 
       updateError(err) {
-        console.log(err);
+        EventBus.$emit('api:error', err.body);
       },
     },
 
     computed: {
+      validators() {
+        return [this.isCountValid]
+      },
+
       isCountValid() {
         return (this.form.count > 0 && this.form.count <= 15);
       },

@@ -2,24 +2,21 @@
   <div v-if="nodes">
 
     <div class="row">
-      <div class="six columns">
+      <div class="seven columns">
 
         <div class="row">
 
-          <div class="seven columns">
+          <div class="eight columns">
             <node-hierarchy class="node-hierarchy" v-for="node in nodes" :key="node.id" :node="node"></node-hierarchy>
           </div>
 
-          <div class="five columns">
-            <span class="pointer lht-blue" @click="createNode">
-              <i class="fa fa-plus" aria-hidden="true"></i>
-              Create a new node.
-            </span>
+          <div class="four columns">
+            <span class="pointer lht-blue" @click="createNode">&plus; Create a new node.</span>
           </div>
         </div>
       </div>
 
-      <div class="six columns">
+      <div class="five columns">
         <create-node-form v-show="isCreating" keep-alive></create-node-form>
         <update-node-forms v-if="isUpdating" :node="activeNode"></update-node-forms>
       </div>
@@ -94,7 +91,7 @@
       },
 
       getError(err) {
-        console.log(err)
+        EventBus.$emit('api:error', err.body);
       },
 
       resetState() {

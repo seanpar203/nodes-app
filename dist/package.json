@@ -1,0 +1,10 @@
+{
+ "name": "nodes-app",
+ "version": "1.0.0",
+ "description": "A app that has multiple nodes.",
+ "author": "Sean Parsons",
+ "private": true,
+ "scripts": {
+   "postinstall": "npm install express"
+ }
+}

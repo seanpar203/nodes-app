@@ -14,15 +14,14 @@
             <span class="pointer lht-blue" @click="createNode">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Create a new node.
-
             </span>
           </div>
         </div>
       </div>
 
       <div class="six columns">
-        <update-node-form v-if="isUpdating" :node="activeNode"></update-node-form>
         <create-node-form v-show="isCreating" keep-alive></create-node-form>
+        <update-node-forms v-if="isUpdating" :node="activeNode"></update-node-forms>
       </div>
     </div>
 
@@ -37,13 +36,13 @@
   import EmitsSocketEvents from '../mixins/EmitsSocketEvents';
 
   // Components
-  import UpdateNodeForm from './UpdateNodeForm';
+  import UpdateNodeForms from './UpdateNodeForms';
   import CreateNodeForm from './CreateNodeForm';
   import NodeHierarchy from '../components/NodeHierarchy';
 
   export default {
     mixins:     [EmitsSocketEvents],
-    components: { NodeHierarchy, CreateNodeForm, UpdateNodeForm },
+    components: { NodeHierarchy, CreateNodeForm, UpdateNodeForms },
 
     data() {
       return {

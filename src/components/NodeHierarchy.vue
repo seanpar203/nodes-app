@@ -2,11 +2,10 @@
 
 <template>
   <ul :class="{'has-children': hasChildren}">
-    <li class="name" @click="editNode(node)">{{node.name}}
-
+    <li class="name" @click="editNode(node)" :class="{'cursor': isSubNode}">{{node.name}}
       <span v-show="isSubNode">{{node.min_num}}:{{node.max_num}}</span>
     </li>
-    <node-hierarchy class="child" v-for="child in node.children" :key="child.id" :node="child"></node-hierarchy>
+    <node-hierarchy v-if="node.can_have_children" class="child" v-for="child in node.children" :key="child.id" :node="child"></node-hierarchy>
   </ul>
 </template>
 
@@ -34,7 +33,9 @@
 
     computed: {
       hasChildren() {
-        return this.node.children.length > 0;
+        if (this.node.children !== undefined) {
+          return this.node.children.length > 0;
+        }
       },
 
       isSubNode() {
@@ -45,6 +46,13 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
+
+  li {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 
   ul {
     margin: 0;
@@ -76,11 +84,15 @@
         height: 1px;
         width: 15px;
         left: 0;
-        top: 50%;
+        top: 10px;
         background-color: black;
         transform: translateY(-50%);
       }
     }
+  }
+
+  .cursor {
+    cursor: pointer;
   }
 
 </style>

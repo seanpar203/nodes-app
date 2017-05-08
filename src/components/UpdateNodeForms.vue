@@ -20,7 +20,7 @@
 
   // Components
   import EditNodeForm from './EditNodeForm';
-  import CreateNodeChildrenForm from './CreateNodeChildrenFrom';
+  import CreateNodeChildrenForm from './CreateNodeChildrenForm';
 
   export default {
     components: { EditNodeForm, CreateNodeChildrenForm },

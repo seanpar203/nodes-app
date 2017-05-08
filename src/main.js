@@ -1,4 +1,5 @@
 // Modules.
+import 'babel-polyfill';
 import Vue from 'vue'
 import socketIO from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';

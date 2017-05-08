@@ -2,7 +2,7 @@
   <div class="u-full-width">
 
     <label for="node-count">Children to generate: {{ form.count }}</label>
-    <input class="u-full-width" type="range" max="15" id="node-count" v-model.number="form.count">
+    <input class="u-full-width" type="range" min="1" max="15" id="node-count" v-model.number="form.count">
 
     <p class="error-text" v-show="submitted && !isCountValid">Count must be between 1-15</p>
     <button class="button-primary lht-red-bg" @click.prevent="submit">Generate children</button>
